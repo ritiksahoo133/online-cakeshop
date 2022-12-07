@@ -1,0 +1,36 @@
+{%extends "master.html"%}
+
+{%block master%}
+<center>
+<div class="container"> 
+  <form method="POST">
+    {%csrf_token%}
+      <div class="row">
+            {%for cake in cake%}
+            <center>
+        <div class="col-sm-6">
+          <div class="panel panel-primary" style="background-color:rgb(253, 253, 235) ">
+            <div class="panel-heading">{{cake.cname}}</div>
+            <div class="panel-body"><img src="{{cake.cake_image.url}}" class="img-circle" style="width:300px;height: 300px;" alt="Image"></div>
+            <div class="panel-footer" style="background-color:rgb(248, 248, 230);">
+              
+              <input type="hidden" name="cake_id" value="{{cake.id}}"/>
+                  price:{{cake.price}}<br/>description:{{cake.description}}
+            <br/>Quantity
+            <select name="qty">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+            <button class="button btn-primary" type="submit">Add To cart</button>
+            </div>
+          </div>
+        </div>
+      </center>
+        {%endfor%}
+      </div>
+      </form>
+    </div></center>
+{%endblock%}

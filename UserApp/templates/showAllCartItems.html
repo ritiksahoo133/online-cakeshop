@@ -1,0 +1,51 @@
+{%extends "master.html"%}
+
+{%block master%}
+<script type="text/javascript">
+      function increment(id)
+      {
+            var txt1=document.getElementById(id);
+            if(txt1.value<10)
+            {
+                  txt1.value=parseInt(txt1.value)+1;
+            }
+      }
+      function decrement(id)
+      {
+            txt1=document.getElementById(id);
+            if(txt1.value>1)
+            {
+                  txt1.value=parseInt(txt1.value)-1;
+            }
+      }
+</script>
+<div class="container">
+      <form>
+      <table class="table" border="0">
+            <tr style="background-color: rgb(250, 200, 136);"><th>cake id</th><th>cake name</th><th>cake price</th><th>Quantity</th><th>sub-total</th><th>Update</th><th>Remove</th></tr>
+            {%for items in cart_items%}
+            <form method="POST">
+                  {%csrf_token%}
+            <tr style="background-color: rgb(250, 246, 240);">
+                  <td><input type="hidden" name="item_id" value="{{items.id}}"/>{{items.cake.id}}</td>
+                  <td>{{items.cake.cname}}</td>
+                  <td>{{items.cake.price}}</td>
+                  <td>
+                        <button type="button" class="button btn-danger" onclick="decrement('qty{{items.cake.id}}');">-</button>
+                        <input type="text" name="qty" id="qty{{items.cake.id}}" value='{{items.qty}}' size="1" readonly/>
+                        <button type="button" class="button btn-danger" onclick="increment('qty{{items.cake.id}}');">+</button>
+                  </td>
+                  <td>{% widthratio items.cake.price 1 items.qty %}</td>
+                  
+                  <td><button type="submit" name="action"  value="update"  class="button btn-success">Update</button></td>
+                  <td><button type="submit" name="action"  value="remove"  class="button btn-success">Remove</button></td>
+            </tr>
+            </form>
+            {%endfor%}
+      </table>
+      <hr style="background-color: crimson;"/>
+      <h3 align="right" style="color: crimson;">Total: {{request.session.total}}</h3>
+      <h3><a href="/MakePayment">Proceed to Make Payment</a></h3>
+      </form>
+</div><br/>
+{%endblock%}
